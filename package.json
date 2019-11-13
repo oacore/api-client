@@ -9,7 +9,9 @@
   "private": true,
   "scripts": {
     "dev": "babel ./src --out-dir ./dist --watch",
-    "build": "babel ./src --out-dir ./dist --source-maps"
+    "build": "babel ./src --out-dir ./dist --source-maps",
+    "lint": "eslint --ignore-path .gitignore --ext .js,.jsx .",
+    "format": "eslint --ignore-path .gitignore --ext .js,.jsx --fix ."
   },
   "devDependencies": {
     "@babel/cli": "^7.7.0",
