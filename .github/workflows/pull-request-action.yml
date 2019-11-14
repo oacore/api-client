@@ -10,10 +10,10 @@ jobs:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
         with:
-          node-version: '10.x'
-      
+          node-version: '12.x'
+
       - name: yarn install, build, and test
         run: |
-          yarn install
-          yarn build
-          yarn lint
+          npm ci
+          npm run build
+          npm run lint

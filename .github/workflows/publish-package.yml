@@ -8,14 +8,35 @@ jobs:
   publish-gpr:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+
+      - name: Git Checkout
+        uses: actions/checkout@v1
+
+      - name: Lint & Build
+        uses: actions/setup-node@v1
         with:
-          node-version: 12
+          node-version: '12.x'
           registry-url: https://npm.pkg.github.com/
           scope: '@oacore/api-client'
-      - run: yarn install
-      - run: yarn lint
-      - run: yarn build
+      - run: |
+          npm ci
+          npm run lint
+          npm run build
+
+      - name: Bump version ${{ steps.get_version.outputs.VERSION }}
+        run: yarn version --new-version ${{ steps.get_version.outputs.VERSION }} --no-git-tag-version
+
+      - name: Publish package
+        run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: Bump version
+          title: Bump version
