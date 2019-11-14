@@ -6,7 +6,10 @@
   "repository": "https://github.com/oacore/api-client.git",
   "author": "CORE Team <dev@core.ac.uk>",
   "license": "MIT",
-  "private": true,
+  "private": false,
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "scripts": {
     "dev": "babel ./src --out-dir ./dist --watch",
     "build": "babel ./src --out-dir ./dist --source-maps",
