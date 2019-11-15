@@ -38,5 +38,7 @@ jobs:
         uses: peter-evans/create-pull-request@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: Bump version
-          title: Bump version
+          commit-message: Bump version ${{ steps.get_version.outputs.VERSION }}
+          title: Bump version ${{ steps.get_version.outputs.VERSION }}
+          body: Bump package.json version
+          branch: bump-version-${{ steps.get_version.outputs.VERSION }}
