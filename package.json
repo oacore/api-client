@@ -2,7 +2,7 @@
   "name": "@oacore/api",
   "version": "0.9.0",
   "description": "CORE API client written in Javascript",
-  "main": "dist/",
+  "main": "dist/index.js",
   "repository": "https://github.com/oacore/api-client.git",
   "author": "CORE Team <dev@core.ac.uk>",
   "license": "MIT",
