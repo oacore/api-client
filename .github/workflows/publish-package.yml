@@ -27,7 +27,7 @@ jobs:
           npm run build
 
       - name: Bump version ${{ steps.get_version.outputs.VERSION }}
-        run: yarn version --new-version ${{ steps.get_version.outputs.VERSION }} --no-git-tag-version
+        run: npm version ${{ steps.get_version.outputs.VERSION }} --git-tag-version=false
 
       - name: Publish package
         run: npm publish
