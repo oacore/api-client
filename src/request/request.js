@@ -34,7 +34,7 @@ const apiRequest = async (url, method = 'GET', params = {}) => {
         `Request ${method} ${url} failed. The original error was: ${message}`
       )
     }
-    networkError.statusCode = response.status || 500
+    networkError.statusCode = (response && response.status) || 500
     throw networkError
   }
 }
