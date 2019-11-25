@@ -31,8 +31,7 @@ jobs:
 
       - name: Publish package
         run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v1.7.3
@@ -43,3 +42,5 @@ jobs:
           body: Bump package.json version
           branch: bump-version-${{ steps.get_version.outputs.VERSION }}
           base: master
+        env:
+          NPM_TOKEN: ${{secrets.GITHUB_TOKEN}}
