@@ -3,8 +3,6 @@ import axios from 'axios'
 import { NetworkError } from './errors'
 
 const CORE_API = 'https://api.core.ac.uk/internal'
-// TODO: Add package version to UA
-const USER_AGENT = '@oacore/api'
 
 const apiRequest = async (url, method = 'GET', params = {}) => {
   try {
@@ -14,7 +12,6 @@ const apiRequest = async (url, method = 'GET', params = {}) => {
       params,
       headers: {
         'Content-Type': 'application/json',
-        'User-Agent': USER_AGENT,
       },
     })
 
