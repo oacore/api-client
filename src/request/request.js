@@ -15,7 +15,7 @@ const apiRequest = async (url, method = 'GET', params = {}) => {
       },
     })
 
-    return { ...response.data, statusCode: response.status }
+    return [response.data, response.status]
   } catch (e) {
     const { response, message } = e
     let networkError
