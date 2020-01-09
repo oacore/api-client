@@ -1,6 +1,6 @@
 {
   "name": "@oacore/api",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "CORE API client written in Javascript",
   "main": "dist/index.js",
   "repository": "https://github.com/oacore/api-client.git",
