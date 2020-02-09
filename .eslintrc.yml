@@ -7,3 +7,12 @@ env:
 parser: babel-eslint
 parserOptions:
   ecmaVersion: 2018
+
+overrides:
+  - files:
+      - '**/__tests__/**/*.[jt]s?(x)'
+      - '**/?(*.)+(spec|test).[jt]s?(x)'
+    extends:
+      - plugin:jest/style
+    env:
+      jest/globals: true
