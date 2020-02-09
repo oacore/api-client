@@ -1,4 +1,4 @@
 {
-  "*.{js,jsx}": ["yarn format", "git add"],
-  "*.{json,scss,css}": ["prettier --write", "git add"]
+  "*.{js,jsx}": ["npm run lint:js -- --fix", "git add"],
+  "*.{json}": ["npm run lint:json -- --write", "git add"]
 }
