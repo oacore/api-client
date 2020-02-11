@@ -1,6 +1,7 @@
 import Entity from './entity'
 
 const data = {
+  name: 'Entity 1',
   updateDate: '2019-12-18T00:04:05Z',
   downloadUrl: 'http://example.com',
   url: 'http://example.com',
@@ -34,4 +35,12 @@ it('transforms URLs', () => {
   expect(entity.downloadUrl).toBeInstanceOf(URL)
   expect(entity.url).not.toBeInstanceOf(URL)
   expect(entity.url).toBe(data.url)
+})
+
+it('stores diffs', () => {
+  const newName = 'Entity 2'
+
+  expect(entity.diff).toEqual({})
+  entity.name = newName
+  expect(entity.diff).toEqual({ name: newName })
 })
