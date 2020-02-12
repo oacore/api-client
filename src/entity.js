@@ -15,58 +15,86 @@ function runTransforms(transforms, entry) {
   return [originalKey, result]
 }
 
-const createProperty = (
-  initialValue,
-  { enumerable = true, configurable = true, writable = true } = {}
+const createDescriptorFor = (
+  key,
+  {
+    initialValues,
+    modifiedValues,
+
+    enumerable = true,
+    configurable = true,
+    writable = true,
+  } = {}
 ) => {
   const descriptor = {
     enumerable,
     configurable,
   }
 
-  const value = {
-    initial: initialValue,
-  }
-
   if (writable) {
     descriptor.get = () =>
-      typeof value.modified != 'undefined' ? value.modified : value.initial
+      (Object.prototype.hasOwnProperty.call(modifiedValues, key)
+        ? modifiedValues
+        : initialValues)[key]
 
     descriptor.set = newValue => {
-      value.modified = newValue
+      modifiedValues[key] = newValue
     }
   } else {
-    descriptor.value = initialValue
-    descriptor.writable = false
+    descriptor.get = () => initialValues[key]
   }
 
   return descriptor
 }
 
-function applyProperties(entries) {
-  entries.forEach(([key, value]) => {
-    Object.defineProperty(this, key, createProperty(value))
-  })
-}
-
 class Entity {
-  constructor(state, options) {
-    if (typeof state != 'object')
-      throw TypeError('Entity initial state must be an object.')
+  #options
 
-    const { transforms = [] } = {
+  #initialValues = {}
+
+  #modifiedValues = {}
+
+  constructor(initialState, options) {
+    this.#options = {
       ...this.constructor.defaultOptions,
       ...options,
     }
 
-    const entries = Object.entries(state).map(
+    this.extend(initialState)
+  }
+
+  get diff() {
+    return Object.fromEntries(
+      Object.entries(this.#modifiedValues).filter(
+        ([key, value]) => value !== this.#initialValues[key]
+      )
+    )
+  }
+
+  extend(object) {
+    if (typeof object != 'object')
+      throw TypeError('Entity initial state must be an object.')
+
+    const { transforms = [] } = this.#options
+
+    const entries = Object.entries(object).map(
       runTransforms.bind(null, transforms)
     )
 
-    this.source = Object.fromEntries(entries)
-    this.change = {}
+    Object.assign(this.#initialValues, Object.fromEntries(entries))
 
-    applyProperties.call(this, entries)
+    const descriptorOptions = {
+      initialValues: this.#initialValues,
+      modifiedValues: this.#modifiedValues,
+    }
+
+    entries.forEach(([key]) => {
+      Object.defineProperty(
+        this,
+        key,
+        createDescriptorFor(key, descriptorOptions)
+      )
+    })
   }
 }
 
