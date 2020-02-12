@@ -11,7 +11,7 @@ jobs:
 
     steps:
       -
-        name: Checkout the branch
+        name: Checkout
         uses: actions/checkout@v1
       -
         name: Setup Node 12.x
