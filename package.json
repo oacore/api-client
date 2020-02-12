@@ -16,7 +16,7 @@
     "lint:json": "prettier --ignore-path .gitignore --check '**/*.json'",
     "lint:js": "eslint --ignore-path .gitignore --ext .js,.jsx src",
     "lint": "run-p lint:*",
-    "test": "jest"
+    "test": "jest --passWithNoTests"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.7",
