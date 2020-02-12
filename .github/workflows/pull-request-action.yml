@@ -6,6 +6,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    env:
+      NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
     steps:
       -
         uses: actions/checkout@v1
@@ -16,13 +19,9 @@ jobs:
       -
         name: install packages
         run: npm ci
-        env:
-          NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       -
         name: build
         run: npm run build
-        env:
-          NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       -
         name: lint
         run: npm run lint
