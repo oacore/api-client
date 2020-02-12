@@ -7,15 +7,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
+      -
+        uses: actions/checkout@v1
+      -
+        uses: actions/setup-node@v1
         with:
           node-version: '12.x'
-
-      - name: npm install, build, and test
-        run: |
-          npm ci
-          npm run build
-          npm run lint
+      -
+        name: install packages
+        run: npm ci
         env:
           NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      -
+        name: build
+        run: npm run build
+      -
+        name: lint
+        run: npm run lint
+      -
+        name: test
+        run: test
