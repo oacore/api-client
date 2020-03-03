@@ -11,7 +11,7 @@ const apiRequest = async (url, method = 'GET', params = {}) => {
       method,
       params,
       headers: {
-        'Content-Type': 'application/json',
+        Accept: 'application/json',
       },
     })
 
