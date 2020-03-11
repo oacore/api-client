@@ -22,7 +22,7 @@ class Collection {
 
   extend(items) {
     const { transform } = this.#options
-    this.#items.push(...items.map(item => transform(item)))
+    this.#items.push(...items.map(transform))
   }
 }
 
