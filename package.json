@@ -33,6 +33,7 @@
     "prettier": "^1.19.1"
   },
   "dependencies": {
+    "agentkeepalive": "^4.1.2",
     "axios": "^0.19.2"
   }
 }

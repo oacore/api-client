@@ -1,12 +1,21 @@
 import axios from 'axios'
+import Agent from 'agentkeepalive'
 
 import { NetworkError } from './errors'
 
 const CORE_API = 'https://api.core.ac.uk/internal'
 
+const keepAliveAgent = new Agent({
+  maxFreeSockets: 20,
+  timeout: 60000, // active socket keepalive for 60 seconds
+  freeSocketTimeout: 30000, // free socket keepalive for 30 seconds
+})
+
+const httpClient = axios.create({ httpAgent: keepAliveAgent })
+
 const apiRequest = async (url, method = 'GET', params = {}) => {
   try {
-    const response = await axios({
+    const response = await httpClient.request({
       url: `${CORE_API}${url}`,
       method,
       params,
